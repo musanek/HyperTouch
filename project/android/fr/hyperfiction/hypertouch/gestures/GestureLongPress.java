@@ -6,7 +6,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.view.View;
-import org.haxe.nme.GameActivity;
+import org.haxe.lime.GameActivity;
 import fr.hyperfiction.hypertouch.HyperTouch;
 
 /**

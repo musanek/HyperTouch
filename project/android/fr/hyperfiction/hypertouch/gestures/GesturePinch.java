@@ -7,7 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.view.View;
-import org.haxe.nme.GameActivity;
+import org.haxe.lime.GameActivity;
 import fr.hyperfiction.hypertouch.HyperTouch;
 
 /**
@@ -17,7 +17,7 @@ import fr.hyperfiction.hypertouch.HyperTouch;
 
 class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener implements View.OnTouchListener {
 
-	private static String TAG = "HyperTouch :: GesturePinch";
+	private static String TAG = "HyperTouch";
 
 	final private ScaleGestureDetector oPinchGesture;
 	
@@ -26,7 +26,9 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 											float dx , 
 											float dy , 
 											float scaleX,
-											float scaleY
+											float scaleY,
+											float focusX,
+											float focusY
 										);
 	static {
 		System.loadLibrary( "hypertouch" ); 
@@ -56,7 +58,7 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 		* @public
 		* @return	void
 		*/
-		public boolean onScale( ScaleGestureDetector d ) {
+		public boolean onScaleBegin( ScaleGestureDetector d ) {
 			try {
 				HyperTouch.mSurface.queueEvent(
 				new Runnable(){
@@ -66,7 +68,40 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
 								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
 								oPinchGesture.getScaleFactor( ),
-								oPinchGesture.getScaleFactor( )
+								oPinchGesture.getScaleFactor( ),
+								oPinchGesture.getFocusX(),
+								oPinchGesture.getFocusY()
+							);
+					}
+				});
+			} catch (Exception e) {
+				Log.i( TAG , "onScaleBegin error : "+e );
+			}
+			return true;
+		}
+
+	// -------o public
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		public boolean onScale( ScaleGestureDetector d ) {
+			// Log.i( TAG , "oPinchGesture.getFocusX() : " + oPinchGesture.getFocusX() );
+			try {
+				HyperTouch.mSurface.queueEvent(
+				new Runnable(){
+	                public void run() { 
+						onPinch( 
+								1,
+								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
+								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
+								oPinchGesture.getScaleFactor( ),
+								oPinchGesture.getScaleFactor( ),
+								oPinchGesture.getFocusX(),
+								oPinchGesture.getFocusY()
 							);
 					}
 				});
@@ -75,6 +110,33 @@ class GesturePinch extends ScaleGestureDetector.SimpleOnScaleGestureListener imp
 			}
 			return false;
 		}
+
+		/**
+		* 
+		* 
+		* @public
+		* @return	void
+		*/
+		public void onScaleEnd( ScaleGestureDetector d ) {
+			try {
+				HyperTouch.mSurface.queueEvent(
+				new Runnable(){
+	                public void run() { 
+						onPinch( 
+								2,
+								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
+								oPinchGesture.getCurrentSpan( ) - oPinchGesture.getPreviousSpan( ),
+								oPinchGesture.getScaleFactor( ),
+								oPinchGesture.getScaleFactor( ),
+								oPinchGesture.getFocusX(),
+								oPinchGesture.getFocusY()
+							);
+					}
+				});
+			} catch (Exception e) {
+				Log.i( TAG , "onScaleEnd error : "+e );
+			}
+		}		
 
 		/**
 		* 

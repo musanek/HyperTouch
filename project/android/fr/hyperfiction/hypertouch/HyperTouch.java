@@ -7,7 +7,7 @@ import android.view.View;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Comparator;
-import org.haxe.nme.GameActivity;
+import org.haxe.lime.GameActivity;
 
 /**
  * ...

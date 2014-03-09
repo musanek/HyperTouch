@@ -6,7 +6,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.view.View;
-import org.haxe.nme.GameActivity;
+import org.haxe.lime.GameActivity;
 import fr.hyperfiction.hypertouch.HyperTouch;
 
 /**
@@ -16,7 +16,7 @@ import fr.hyperfiction.hypertouch.HyperTouch;
 
 class GestureTap extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
 
-	private static String TAG = "HyperTouch :: GestureTap";
+	private static String TAG = "HyperTouch";
 
 	private GestureDetector _gesture_detector;
 	private int _fingers_count;

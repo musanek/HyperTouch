@@ -9,12 +9,10 @@
 
 
 #include <hx/CFFI.h>
-#include "hypertouch.h"
+#include "HyperTouch.h"
 #include <stdio.h>
 
 #ifdef ANDROID
-	#include <hx/CFFI.h>
-	#include <hx/Macros.h>
 	#include <jni.h>
 
 	/*
@@ -212,6 +210,9 @@ extern "C"{
 																	jfloat fSizeY
     															){
     	
+		int top = 0;
+		gc_set_top_of_stack(&top,true);
+		gc_exit_blocking();
     	value args = alloc_array( 9 );
     	val_array_set_i( args , 0 , alloc_int( iFingers ) );
     	val_array_set_i( args , 1 , alloc_int( iTaps ) );
@@ -223,6 +224,7 @@ extern "C"{
     	val_array_set_i( args , 7 , alloc_float( fSizeX ) );
     	val_array_set_i( args , 8 , alloc_float( fSizeY ) );
         val_call1( eval_callback_tap -> get( ) , args ); 
+		gc_enter_blocking();
        
     }
 
@@ -238,6 +240,9 @@ extern "C"{
 																	jfloat fSizeX,
 																	jfloat fSizeY
     															){
+		int top = 0;
+		gc_set_top_of_stack(&top,true);
+		gc_exit_blocking();
     	value args = alloc_array( 7 );
     	val_array_set_i( args , 0 , alloc_int( iPhase ) );
     	val_array_set_i( args , 1 , alloc_int( iPointerId ) );
@@ -247,6 +252,7 @@ extern "C"{
     	val_array_set_i( args , 5 , alloc_float( fSizeX ) );
     	val_array_set_i( args , 6 , alloc_float( fSizeY ) );
         val_call1( eval_callback_longpress -> get( ) , args ); 
+        gc_enter_blocking();
     }
 
 //
@@ -259,6 +265,9 @@ extern "C"{
 																	jfloat dx , 
 																	jfloat dy
     															){
+		int top = 0;
+		gc_set_top_of_stack(&top,true);
+		gc_exit_blocking();    	
     	value args = alloc_array( 5 );
     	val_array_set_i( args , 0 , alloc_int( dir ) );
     	val_array_set_i( args , 1 , alloc_float( vx ) );
@@ -266,7 +275,7 @@ extern "C"{
     	val_array_set_i( args , 3 , alloc_float( dx ) );
     	val_array_set_i( args , 4 , alloc_float( dy ) );
       	val_call1( eval_callback_swipe -> get( ) , args ); 
-      	
+      	gc_enter_blocking();
     }
 
     JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GesturePinch_onPinch(
@@ -276,16 +285,24 @@ extern "C"{
 																	jfloat dx , 
 																	jfloat dy ,
 																	jfloat scaleX , 
-																	jfloat scaleY
+																	jfloat scaleY,
+																	jfloat focusX , 
+																	jfloat focusY
     															){
-    	
+
+		int top = 0;
+		gc_set_top_of_stack(&top,true);
+		gc_exit_blocking();
     	value args = alloc_array( 5 );
     	val_array_set_i( args , 0 , alloc_int( iPhase ) );
     	val_array_set_i( args , 1 , alloc_float( dx ) );
     	val_array_set_i( args , 2 , alloc_float( dy ) );
     	val_array_set_i( args , 3 , alloc_float( scaleX ) );
     	val_array_set_i( args , 4 , alloc_float( scaleY ) );
+    	val_array_set_i( args , 5 , alloc_float( focusX ) );
+    	val_array_set_i( args , 6 , alloc_float( focusY ) );    	
       	val_call1( eval_callback_pinch -> get( ) , args );       	
+		gc_enter_blocking();
     }
 
     JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GesturePan_onPan(
@@ -299,6 +316,9 @@ extern "C"{
 																	jfloat pressure
     															){
     	
+		int top = 0;
+		gc_set_top_of_stack(&top,true);
+		gc_exit_blocking();
     	value args = alloc_array( 6 );
     	val_array_set_i( args , 0 , alloc_int( phase ) );
     	val_array_set_i( args , 1 , alloc_float( fx ) );
@@ -306,7 +326,8 @@ extern "C"{
     	val_array_set_i( args , 3 , alloc_float( vx ) );
     	val_array_set_i( args , 4 , alloc_float( vy ) );
     	val_array_set_i( args , 5 , alloc_float( pressure ) );
-    	val_call1( eval_callback_pan -> get( ) , args );       	
+    	val_call1( eval_callback_pan -> get( ) , args );
+		gc_enter_blocking();
     }
 
     JNIEXPORT void JNICALL Java_fr_hyperfiction_hypertouch_gestures_GestureRotation_onRot(
@@ -319,13 +340,17 @@ extern "C"{
 																	jfloat pressure
     															){
     	
+		int top = 0;
+		gc_set_top_of_stack(&top,true);
+		gc_exit_blocking();
     	value args = alloc_array( 5 );
     	val_array_set_i( args , 0 , alloc_int( phase ) );
     	val_array_set_i( args , 1 , alloc_float( fx ) );
     	val_array_set_i( args , 2 , alloc_float( fy ) );
     	val_array_set_i( args , 3 , alloc_float( deg ) );
     	val_array_set_i( args , 4 , alloc_float( pressure ) );
-    	val_call1( eval_callback_rot -> get( ) , args );       	
+    	val_call1( eval_callback_rot -> get( ) , args );
+		gc_enter_blocking();
     }
 
 }

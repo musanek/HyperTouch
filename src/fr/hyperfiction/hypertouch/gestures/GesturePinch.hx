@@ -60,7 +60,7 @@ class GesturePinch extends AGesture{
 		*/
 		private function _onPinch( a : Array<Dynamic> ) : Void{
 
-			var ev : TransformGestureEvent = new TransformGestureEvent( GESTURE_PINCH , a[ 1 ] , a[ 2 ] , a[ 3 ] , a[ 3 ] );
+			var ev : TransformGestureEvent = new TransformGestureEvent( GESTURE_PINCH , a[ 1 ] , a[ 2 ] , a[ 3 ] , a[ 3 ], 0.0,  a[5], a[6]);
 				ev.phase = _translate_phase( a[ 0 ] );
 			stage_emit( ev );
 

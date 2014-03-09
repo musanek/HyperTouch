@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import fr.hyperfiction.hypertouch.HyperTouch;
-import org.haxe.nme.GameActivity;
+import org.haxe.lime.GameActivity;
 
 /**
  * ...
