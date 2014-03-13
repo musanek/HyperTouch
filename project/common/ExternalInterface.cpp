@@ -159,12 +159,15 @@ using namespace Hyperfiction;
 	    	val_call1( eval_callback_longpress -> get( ) , args ); 	    	
 		}
 
-		void onPinch( int iPhase , float dx , float dy ,float fScale ){
+		void onPinch( int iPhase , float dx , float dy ,float fScale, float vx, float vy ){
 			value args = alloc_array( 4 );
 	    	val_array_set_i( args , 0 , alloc_int( iPhase ) );
 	    	val_array_set_i( args , 1 , alloc_float( dx ) );
 	    	val_array_set_i( args , 2 , alloc_float( dy ) );
 	    	val_array_set_i( args , 3 , alloc_float( fScale ) );
+	    	val_array_set_i( args , 4 , alloc_float( fScale ) );
+	    	val_array_set_i( args , 5 , alloc_float( vx ) );
+	    	val_array_set_i( args , 6 , alloc_float( vy ) );
 	    	val_call1( eval_callback_pinch -> get( ) , args );       	
 		}
 

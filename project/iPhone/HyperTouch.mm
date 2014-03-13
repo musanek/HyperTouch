@@ -9,7 +9,7 @@
 		void onTap( int iFingers , int iTaps , int iPhase , float fx , float fy );
 		void onLongPress( int iFingers , int iTaps , int iPhase , float fx , float fy );
 		void onSwipe( int iFingers , int iDir , float fVx , float fVy , float fDx , float fDy );
-		void onPinch( int iPhase , float dx , float dy ,float fScale );
+		void onPinch( int iPhase , float dx , float dy ,float fScale, float vx, float vy);
 		void onPan( int iPhase , float dx , float dy , float vx , float vy );
 		void onRot( int phase , float fx , float fy , float deg );		
 	} 
@@ -367,7 +367,8 @@
 				onPinch( 
 							[self translateState:recognizer.state] , 
 							0 , 0 , 
-							recognizer.scale
+							recognizer.scale,
+							pos.x, pos.y
 						);
 				
 				
